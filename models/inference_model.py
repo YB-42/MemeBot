@@ -7,13 +7,10 @@ from resnet import ResNet
 
 model = EfficientNet()
 
-model.load('data/EffNet.pth')
+model.load("data/EffNet.pth")
 
-image = Image.open('image.jpg').convert('RGB')
+image = Image.open("image.jpg").convert("RGB")
 
 prediction = model.predict(image)
 
-print('Prediction', prediction)
-
-
-
+print("Prediction", prediction)
