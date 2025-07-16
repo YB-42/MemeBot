@@ -1,8 +1,8 @@
-from basemodel import BaseModel
-from torch import nn
 import timm
 import torch
 import torchvision.transforms as transforms
+from basemodel import BaseModel
+from torch import nn
 
 
 class ResNet(BaseModel, nn.Module):
@@ -20,12 +20,12 @@ class ResNet(BaseModel, nn.Module):
             ]
         )
 
-    def load(self, checkpoint_path: str):
+    def load(self, checkpoint_path: str) -> None:
         state_dict = torch.load(checkpoint_path, map_location="cpu")
         self.load_state_dict(state_dict)
         self.eval()
 
-    def predict(self, x):
+    def predict(self, x) -> torch.Tensor:
         self.eval()
         with torch.no_grad():
             x = self.transform(x).unsqueeze(0)

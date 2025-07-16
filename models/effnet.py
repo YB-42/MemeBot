@@ -1,8 +1,8 @@
-from basemodel import BaseModel
-import torch
-from torch import nn
 import timm
+import torch
 import torchvision.transforms as transforms
+from basemodel import BaseModel
+from torch import nn
 
 
 class EfficientNet(BaseModel, nn.Module):
@@ -20,12 +20,12 @@ class EfficientNet(BaseModel, nn.Module):
             ]
         )
 
-    def load(self, checkpoint_path):
+    def load(self, checkpoint_path) -> None:
         state_dict = torch.load(checkpoint_path, map_location="cpu")
         self.load_state_dict(state_dict)
         self.eval()
 
-    def predict(self, image):
+    def predict(self, image) -> torch.Tensor:
         self.eval()
         with torch.no_grad():
             x = self.transform(image).unsqueeze(0)

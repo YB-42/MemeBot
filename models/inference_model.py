@@ -1,9 +1,8 @@
 import torch
-from PIL import Image
-
-from vit import VisionTransformer
 from effnet import EfficientNet
+from PIL import Image
 from resnet import ResNet
+from vit import VisionTransformer
 
 model = EfficientNet()
 
