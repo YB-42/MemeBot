@@ -137,8 +137,8 @@ async def handle_photo(message: types.Message):
 
 @dp.callback_query(lambda c: c.data in ["back_to_models", "clear_chat"])
 async def process_callback(callback_query: types.CallbackQuery):
-    user_id = callback_query.from_user.id
     data = callback_query.data
+    chat_id = callback_query.message.chat.id
 
     if data == "back_to_models":
         await callback_query.message.answer(
@@ -147,14 +147,18 @@ async def process_callback(callback_query: types.CallbackQuery):
         await callback_query.answer()
 
     elif data == "clear_chat":
-        chat_id = callback_query.message.chat.id
-        history = await bot.get_chat_history(chat_id, limit=100)
-        for msg in history:
+        # Удаляем последние 100 сообщений
+        deleted = 0
+        start_id = callback_query.message.message_id
+
+        for msg_id in range(start_id, start_id - 100, -1):
             try:
-                await bot.delete_message(chat_id=chat_id, message_id=msg.message_id)
+                await bot.delete_message(chat_id=chat_id, message_id=msg_id)
+                deleted += 1
             except Exception:
-                pass
-        await callback_query.answer("Чат очищен")
+                continue
+
+        await callback_query.answer(f"Удалено сообщений: {deleted}")
 
 
 async def main():
