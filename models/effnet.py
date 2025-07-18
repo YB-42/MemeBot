@@ -1,7 +1,7 @@
 import timm
 import torch
 import torchvision.transforms as transforms
-from basemodel import BaseModel
+from models.basemodel import BaseModel
 from torch import nn
 
 
