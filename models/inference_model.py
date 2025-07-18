@@ -1,8 +1,8 @@
 import torch
-from effnet import EfficientNet
+from models.effnet import EfficientNet
 from PIL import Image
-from resnet import ResNet
-from vit import VisionTransformer
+from models.resnet import ResNet
+from models.vit import VisionTransformer
 
 
 def run_inference(model_name: str, image: Image.Image) -> torch.Tensor:
@@ -18,13 +18,16 @@ def run_inference(model_name: str, image: Image.Image) -> torch.Tensor:
     else:
         raise ValueError("Invalid model name")
 
-    image_filt = Image.open("image.jpg").convert("RGB")
+    # Заменяем на переданное изображение, а не жестко "image.jpg"
+    # image_filt = Image.open("image.jpg").convert("RGB")
+    image_filt = image.convert("RGB")
+
     prediction = model.predict(image_filt)
 
     return prediction
 
 
-model_n = input()
-image = Image.open("image.jpg")
-print(f"Prediction: {run_inference(model_n, image)}")
-
+if __name__ == "__main__":
+    model_n = input("Введите название модели: ")
+    image = Image.open("image.jpg")
+    print(f"Prediction: {run_inference(model_n, image)}")
